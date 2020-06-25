@@ -8,6 +8,9 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Open up App.js to start working on your app!</Text>
+      <pre>Télécharger</pre>
+      <h1>Application Mobile</h1>
+    <a href="https://google.fr" target="blank">Amen</a>
     </View>
   );
 }
