@@ -1,7 +1,7 @@
 <?php
  
 // Importing DBConfig.php file.
-include 'db.php';
+include 'DBConfig.php';
  
 // Creating connection.
 $con = mysqli_connect($HostName,$HostUser,$HostPass,$DatabaseName);
@@ -13,17 +13,16 @@ $json = file_get_contents('php://input');
 $obj = json_decode($json,true);
  
  // Populate User name from JSON $obj array and store into $name.
-$name = $obj['name'];
+$name = $obj['nom_client'];
  
 // Populate User email from JSON $obj array and store into $email.
-$email = $obj['email'];
+$email = $obj['email_client'];
  
 // Populate Password from JSON $obj array and store into $password.
-$password = $obj['password'];
+$password = $obj['pass_client'];
  
-
 //Checking Email is already exist or not using SQL query.
-$CheckSQL = "SELECT * FROM client WHERE email='$email'";
+$CheckSQL = "SELECT * FROM client WHERE email_client='$email'";
  
 // Executing SQL Query.
 $check = mysqli_fetch_array(mysqli_query($con,$CheckSQL));
@@ -43,7 +42,7 @@ $EmailExistJson = json_encode($EmailExistMSG);
  else{
  
  // Creating SQL query and insert the record into MySQL database table.
-$Sql_Query = "insert into client (name,email,password) values ('$name','$email','$password')";
+$Sql_Query = "insert into client (nom_client,email_client,pass_client) values ('$name','$email','$password')";
  
  
  if(mysqli_query($con,$Sql_Query)){

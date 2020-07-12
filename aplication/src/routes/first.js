@@ -32,6 +32,8 @@ import S7 from "../screens/screen7";
 import S8 from "../screens/screen8";
 import S9 from "../screens/screen9";
 import S10 from "../screens/screen10";
+import S11 from "../screens/screen11";
+import S12 from "../screens/screen12";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -49,19 +51,27 @@ export default class First extends Component {
           <TopTabs.Screen />
         </TopTabs.Navigator>
       );
-      
-       
     };
-    myDrawer = () =>{
-      return( <Drawer.Navigator>
-        <Drawer.Screen name="Profil" component={S7} />
-        <Drawer.Screen name="Commander" component={S8} />
-        <Drawer.Screen name="Mes Commandes" component={S9} />
-        <Drawer.Screen name="Notifications" component={S10} />
-      </Drawer.Navigator>
-    );
-
-    } 
+    myDrawer = () => {
+      return (
+        <Drawer.Navigator>
+          <Drawer.Screen name="Profil" component={S7} />
+          <Drawer.Screen name="Commander" component={S8} />
+          <Drawer.Screen name="Mes Commandes" component={S9} />
+          <Drawer.Screen name="Notifications" component={S10} />
+        </Drawer.Navigator>
+      );
+    };
+    myDrawer1 = () => {
+      return (
+        <Drawer.Navigator>
+          <Drawer.Screen name="Profil" component={S7} />
+          <Drawer.Screen name="New Commandes" component={S11} />
+          <Drawer.Screen name="Projets encours" component={S12} />
+          <Drawer.Screen name="Notifications" component={S10} />
+        </Drawer.Navigator>
+      );
+    };
     return (
       <NavigationContainer>
         <Stack.Navigator>
@@ -86,6 +96,7 @@ export default class First extends Component {
             }}
           />
           <Stack.Screen name="Espace Client" children={myDrawer} />
+          <Stack.Screen name="Espace Pro" children={myDrawer1} />
         </Stack.Navigator>
       </NavigationContainer>
     );

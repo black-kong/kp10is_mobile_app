@@ -11,62 +11,99 @@ import {
 } from "react-native";
 import { color } from "react-native-reanimated";
 
-import UserRegistrationFunction from "./registFunc";
+export default class S6 extends Component {
+  constructor() {
+    super();
 
-export default function S6() {
-  const [userName, setName] = useState("");
-  const [userEmail, setEmail] = useState("");
-  const [userPass, setPass] = useState("");
+    this.state = {
+      userName: "",
+      userEmail: "",
+      userPass: "",
+    };
+  }
+  reg = () => {
+    fetch("http://192.168.43.202:8080/kp10/register.php", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nom_client: this.state.userName,
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <Image style={styles.inputIcon} source={require("../images/nom.png")} />
-        <TextInput
-          style={styles.inputs}
-          placeholder="Nom"
-          underlineColorAndroid="transparent"
-          onChangeText={(userName) => setName({ userName })}
-        />
+        email_client: this.state.userEmail,
+
+        pass_client: this.state.userPass,
+      }),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        // Showing response message coming from server after inserting records.
+        Alert.alert(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.inputContainer}>
+          <Image
+            style={styles.inputIcon}
+            source={require("../images/nom.png")}
+          />
+          <TextInput
+            style={styles.inputs}
+            placeholder="Nom"
+            underlineColorAndroid="transparent"
+            onChangeText={(nom_client) =>
+              this.setState({ userName: nom_client })
+            }
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Image
+            style={styles.inputIcon}
+            source={require("../images/email.png")}
+          />
+          <TextInput
+            style={styles.inputs}
+            placeholder="Email"
+            keyboardType="email-address"
+            underlineColorAndroid="transparent"
+            onChangeText={(email_client) =>
+              this.setState({ userEmail: email_client })
+            }
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Image
+            style={styles.inputIcon}
+            source={require("../images/pass.png")}
+          />
+          <TextInput
+            style={styles.inputs}
+            placeholder="Password"
+            secureTextEntry={true}
+            underlineColorAndroid="transparent"
+            onChangeText={(pass_client) =>
+              this.setState({ userPass: pass_client })
+            }
+          />
+        </View>
+
+        <TouchableHighlight
+          style={[styles.buttonContainer, styles.loginButton]}
+          onPress={() => this.reg()}
+        >
+          <Text style={styles.loginText}>S'inscrire</Text>
+        </TouchableHighlight>
       </View>
-      <View style={styles.inputContainer}>
-        <Image
-          style={styles.inputIcon}
-          source={require("../images/email.png")}
-        />
-        <TextInput
-          style={styles.inputs}
-          placeholder="Email"
-          keyboardType="email-address"
-          underlineColorAndroid="transparent"
-          onChangeText={(userEmail) => setEmail({ userEmail })}
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Image
-          style={styles.inputIcon}
-          source={require("../images/pass.png")}
-        />
-        <TextInput
-          style={styles.inputs}
-          placeholder="Password"
-          secureTextEntry={true}
-          underlineColorAndroid="transparent"
-          onChangeText={(userPass) => setPass({ userPass })}
-        />
-      </View>
-
-      <TouchableHighlight
-        style={[styles.buttonContainer, styles.loginButton]}
-        onPress={() => {
-          UserRegistrationFunction;
-        }}
-      >
-        <Text style={styles.loginText}>S'inscrire</Text>
-      </TouchableHighlight>
-    </View>
-  );
+    );
+  }
 }
 const styles = StyleSheet.create({
   container: {

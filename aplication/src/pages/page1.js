@@ -64,7 +64,7 @@ export default class P1 extends Component {
             tabStyle={{ backgroundColor: "#3498db" }}
             activeTabStyle={{ backgroundColor: "#3498db" }}
           >
-            <S5 />
+            <S5 navigation={this.props.navigation} />
           </Tab>
         </Tabs>
       </Container>
