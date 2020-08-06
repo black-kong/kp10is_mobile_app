@@ -1,5 +1,4 @@
 <?php include 'DBConfig.php';
-
 $con = mysqli_connect($HostName,$HostUser,$HostPass,$DatabaseName);
 
 
@@ -10,14 +9,12 @@ $con = mysqli_connect($HostName,$HostUser,$HostPass,$DatabaseName);
 	
     $password = $obj['password'];
     
-
-	
 	if($obj['email']!="" ){	
 	
-    $result= $mysqli->query("SELECT * FROM client where email_client='$email' and pass_client='$password'");
+    $result= $mysqli->query("SELECT * FROM pro where email_pro='$email' and pass_pro='$password'");
 
 	
-		if($result1->num_rows==0){
+		if($result->num_rows==0){
 
 
 			$InvalidMSG = 'Informations incorrects' ;
@@ -43,11 +40,10 @@ $con = mysqli_connect($HostName,$HostUser,$HostPass,$DatabaseName);
 		//echo json_encode();				
         }
         
-        
 	}	
 	else{
 
-		$SuccessLoginMsg ='Veuillez reessayer';
+		$SuccessLoginMsg = 'Veuillez reessayer';
  
 			$SuccessLoginJson = json_encode($SuccessLoginMsg);
 			
@@ -56,8 +52,8 @@ $con = mysqli_connect($HostName,$HostUser,$HostPass,$DatabaseName);
 
 	
 	  //echo json_encode();
-	}
-
-	mysqli_close($con);
+    }
+    
+    mysqli_close($con);
 	
 ?>

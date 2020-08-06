@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,59 +10,57 @@ import {
   Alert,
 } from "react-native";
 import { color } from "react-native-reanimated";
+import { useNavigation } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
+import {
+  createMaterialTopTabNavigator,
+  MaterialTopTabBar,
+} from "@react-navigation/material-top-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
-export default class S6 extends Component {
+export default class S13 extends Component {
   constructor() {
     super();
-
     this.state = {
-      userName: "",
+      //userName: "",
       userEmail: "",
       userPass: "",
     };
   }
-  reg = () => {
-    fetch("http://192.168.43.202/kp10/register.php", {
+  log = () => {
+    const { userEmail } = this.state;
+    const { userPass } = this.state;
+
+    fetch("http://192.168.43.202/kp10/loginpro.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        nom_client: this.state.userName,
+        email: userEmail,
 
-        email_client: this.state.userEmail,
-
-        pass_client: this.state.userPass,
+        password: userPass,
       }),
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        // Showing response message coming from server after inserting records.
-        Alert.alert(responseJson);
+        // If server response message same as Data Matched
+        if (responseJson === "ok") {
+          //Then open Profile activity and send user email to profile activity.
+          this.props.navigation.navigate("Espace Pro");
+        } else {
+          Alert.alert(responseJson);
+        }
       })
       .catch((error) => {
         console.error(error);
       });
   };
-
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <Image
-            style={styles.inputIcon}
-            source={require("../images/nom.png")}
-          />
-          <TextInput
-            style={styles.inputs}
-            placeholder="Nom"
-            underlineColorAndroid="transparent"
-            onChangeText={(nom_client) =>
-              this.setState({ userName: nom_client })
-            }
-          />
-        </View>
         <View style={styles.inputContainer}>
           <Image
             style={styles.inputIcon}
@@ -73,9 +71,7 @@ export default class S6 extends Component {
             placeholder="Email"
             keyboardType="email-address"
             underlineColorAndroid="transparent"
-            onChangeText={(email_client) =>
-              this.setState({ userEmail: email_client })
-            }
+            onChangeText={(userEmail) => this.setState({ userEmail })}
           />
         </View>
 
@@ -89,22 +85,23 @@ export default class S6 extends Component {
             placeholder="Password"
             secureTextEntry={true}
             underlineColorAndroid="transparent"
-            onChangeText={(pass_client) =>
-              this.setState({ userPass: pass_client })
-            }
+            onChangeText={(userPass) => this.setState({ userPass })}
           />
         </View>
 
         <TouchableHighlight
           style={[styles.buttonContainer, styles.loginButton]}
-          onPress={() => this.reg()}
+          onPress={() => {
+            this.log();
+          }}
         >
-          <Text style={styles.loginText}>S'inscrire</Text>
+          <Text style={styles.loginText}>Se Connecter</Text>
         </TouchableHighlight>
       </View>
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

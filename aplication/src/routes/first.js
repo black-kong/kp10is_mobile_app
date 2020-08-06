@@ -34,6 +34,7 @@ import S9 from "../screens/screen9";
 import S10 from "../screens/screen10";
 import S11 from "../screens/screen11";
 import S12 from "../screens/screen12";
+import S13 from "../screens/screen13";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -95,8 +96,37 @@ export default class First extends Component {
               headerTintColor: "#fff",
             }}
           />
-          <Stack.Screen name="Espace Client" children={myDrawer} />
-          <Stack.Screen name="Espace Pro" children={myDrawer1} />
+
+          <Stack.Screen
+            name="LoginP"
+            component={S13}
+            options={{
+              headerStyle: {
+                backgroundColor: "#3498db",
+              },
+              headerTintColor: "#fff",
+            }}
+          />
+          <Stack.Screen
+            name="Espace Client"
+            children={myDrawer}
+            options={{
+              headerStyle: {
+                backgroundColor: "#3498db",
+              },
+              headerTintColor: "#fff",
+            }}
+          />
+          <Stack.Screen
+            name="Espace Pro"
+            children={myDrawer1}
+            options={{
+              headerStyle: {
+                backgroundColor: "#3498db",
+              },
+              headerTintColor: "#fff",
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );

@@ -23,61 +23,36 @@ export default class S5 extends Component {
   constructor() {
     super();
     this.state = {
-      userName: "",
+      //userName: "",
       userEmail: "",
       userPass: "",
     };
   }
-  log = () =>{
- 
-      const { userEmail }  = this.state ;
-      const { userPass}  = this.state ;
-      
-      
-     fetch('https://reactnativecode.000webhostapp.com/User_Login.php', {
-       method: 'POST',
-       headers: {
-         'Accept': 'application/json',
-         'Content-Type': 'application/json',
-       },
-       body: JSON.stringify({
-      
-         email: userEmail,
-      
-         password: userPassword
-      
-       })
-      
-     }).then((response) => response.json())
-           .then((responseJson) => {
-     
-             // If server response message same as Data Matched
-            if(responseJson === 'Data Matched client')
-             {
-     
-                 //Then open Profile activity and send user email to profile activity.
-                 this.props.navigation.navigate('Espace Client', { Email: userEmail });
-     
-             }
-             else{
-              if(responseJson === 'Data Matched pro')
-              {
-      
-                  //Then open Profile activity and send user email to profile activity.
-                  this.props.navigation.navigate('Espace Pro', { Email: UserEmail });
-      
-              }else{Alert.alert(responseJson);}
-     
-               
-             }
-     
-           }).catch((error) => {
-             console.error(error);
-           });
-      
-       }
-  }
+  log = () => {
+    fetch("http://192.168.43.202/kp10/login.php", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: this.state.userEmail,
 
+        password: this.state.userPass,
+      }),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if (responseJson === "ok") {
+          this.props.navigation.navigate("Espace Client");
+        } else {
+          //Alert.alert(responseJson);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -116,6 +91,15 @@ export default class S5 extends Component {
           }}
         >
           <Text style={styles.loginText}>Se Connecter</Text>
+        </TouchableHighlight>
+
+        <TouchableHighlight
+          style={[styles.buttonContainer, styles.loginButton]}
+          onPress={() => {
+            this.props.navigation.navigate("LoginP");
+          }}
+        >
+          <Text style={styles.loginText}>Pro</Text>
         </TouchableHighlight>
 
         <TouchableHighlight
