@@ -1,14 +1,20 @@
 import { StatusBar } from "expo-status-bar";
 import React, { Component } from "react";
 import { StyleSheet, Text, View, Image, Alert } from "react-native";
+//import { Container, Content, Header } from "native-base";
 
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  getFocusedRouteNameFromRoute,
+} from "@react-navigation/native";
 import {
   createMaterialTopTabNavigator,
   MaterialTopTabBar,
 } from "@react-navigation/material-top-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+
+import { useNavigation } from "@react-navigation/native";
 
 import {
   Container,
@@ -36,6 +42,8 @@ import S11 from "../screens/screen11";
 import S12 from "../screens/screen12";
 import S13 from "../screens/screen13";
 
+import logo from "../images/logo.png";
+
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const TopTabs = createMaterialTopTabNavigator();
@@ -53,9 +61,24 @@ export default class First extends Component {
         </TopTabs.Navigator>
       );
     };
+
     myDrawer = () => {
       return (
-        <Drawer.Navigator>
+        <Drawer.Navigator
+          screenOptions={({ navigation }) => ({
+            headerStyle: {
+              backgroundColor: "#3498db",
+            },
+            headerTintColor: "#fff",
+            headerLeft: () => (
+              <Icon
+                name="menu"
+                onPress={() => navigation.openDrawer()}
+                color="#fff"
+              />
+            ),
+          })}
+        >
           <Drawer.Screen name="Profil" component={S7} />
           <Drawer.Screen name="Commander" component={S8} />
           <Drawer.Screen name="Mes Commandes" component={S9} />
@@ -65,7 +88,21 @@ export default class First extends Component {
     };
     myDrawer1 = () => {
       return (
-        <Drawer.Navigator>
+        <Drawer.Navigator
+          screenOptions={({ navigation }) => ({
+            headerStyle: {
+              backgroundColor: "#3498db",
+            },
+            headerTintColor: "#fff",
+            headerLeft: () => (
+              <Icon
+                name="menu"
+                onPress={() => navigation.openDrawer()}
+                color="#fff"
+              />
+            ),
+          })}
+        >
           <Drawer.Screen name="Profil" component={S7} />
           <Drawer.Screen name="New Commandes" component={S11} />
           <Drawer.Screen name="Projets encours" component={S12} />
@@ -73,6 +110,7 @@ export default class First extends Component {
         </Drawer.Navigator>
       );
     };
+
     return (
       <NavigationContainer>
         <Stack.Navigator>
@@ -107,28 +145,42 @@ export default class First extends Component {
               headerTintColor: "#fff",
             }}
           />
+
           <Stack.Screen
             name="Espace Client"
             children={myDrawer}
-            options={{
+            options={({ navigation }) => ({
               headerStyle: {
                 backgroundColor: "#3498db",
               },
               headerTintColor: "#fff",
-            }}
+            })}
           />
           <Stack.Screen
             name="Espace Pro"
             children={myDrawer1}
-            options={{
+            options={({ navigation }) => ({
               headerStyle: {
                 backgroundColor: "#3498db",
               },
               headerTintColor: "#fff",
-            }}
+            })}
           />
         </Stack.Navigator>
       </NavigationContainer>
     );
   }
 }
+
+styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  draImg: {
+    height: 150,
+    width: 150,
+    borderRadius: 75,
+  },
+});

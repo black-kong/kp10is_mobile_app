@@ -46,7 +46,7 @@ export default class S5 extends Component {
         if (responseJson === "ok") {
           this.props.navigation.navigate("Espace Client");
         } else {
-          //Alert.alert(responseJson);
+          Alert.alert(responseJson);
         }
       })
       .catch((error) => {
