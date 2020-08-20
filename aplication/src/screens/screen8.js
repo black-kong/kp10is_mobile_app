@@ -36,49 +36,56 @@ export default class screen8 extends Component {
     super();
     this.state = {
       sLabel: "",
+      desc: "",
+      mail: "",
     };
   }
   show = (value) => {
     this.setState({ sLabel: value });
   };
-  /*com = () => {
-    fetch("http://192.168.43.202/kp10/login.php", {
+  com = () => {
+    fetch("http://192.168.43.202/kp10/commander.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: this.state.userEmail,
-
-        password: this.state.userPass,
+        mail: this.state.mail,
+        desc: this.state.desc,
+        sLabel: this.state.sLabel,
       }),
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        if (responseJson === "ok") {
-          this.props.navigation.navigate("Espace Client");
-        } else {
-          Alert.alert(responseJson);
-        }
+        Alert.alert(responseJson);
       })
       .catch((error) => {
         console.error(error);
       });
-  };*/
+  };
+
   render() {
     return (
       <View style={styles.container}>
-        <Text> Saisissez votre commande </Text>
+        <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center" }}>
+          Saisissez votre commande
+        </Text>
         <View>
           <Picker
             selectedValue={this.state.sLabel}
             onValueChange={this.show.bind()}
+            style={{}}
           >
             <Picker.Item
               label="Service"
               value="0"
               color="#3498db"
+              style={{
+                backgroundColor: "white",
+                fontWeight: "bold",
+                fontSize: 20,
+              }}
             ></Picker.Item>
             <Picker.Item
               label="Sondage"
@@ -141,7 +148,6 @@ export default class screen8 extends Component {
           <TextInput
             style={styles.inputs}
             placeholder="Description"
-            //keyboardType="email-address"
             underlineColorAndroid="transparent"
             onChangeText={(desc) => this.setState({ desc })}
           />
@@ -150,14 +156,14 @@ export default class screen8 extends Component {
         <View style={styles.inputContainer}>
           <Image
             style={styles.inputIcon}
-            source={require("../images/icons8-horloge-64.png")}
+            source={require("../images/email.png")}
           />
           <TextInput
             style={styles.inputs}
-            placeholder="Durée maximale du projet"
-            //keyboardType="email-address"
+            placeholder="E-mail"
+            keyboardType="email-address"
             underlineColorAndroid="transparent"
-            onChangeText={(desc) => this.setState({ desc })}
+            onChangeText={(mail) => this.setState({ mail })}
           />
         </View>
 
@@ -221,7 +227,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 20,
-    width: 250,
+    width: 400,
     borderRadius: 30,
   },
   loginButton: {

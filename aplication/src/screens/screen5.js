@@ -23,7 +23,7 @@ export default class S5 extends Component {
   constructor() {
     super();
     this.state = {
-      //userName: "",
+      
       userEmail: "",
       userPass: "",
     };
@@ -44,7 +44,9 @@ export default class S5 extends Component {
       .then((response) => response.json())
       .then((responseJson) => {
         if (responseJson === "ok") {
-          this.props.navigation.navigate("Espace Client");
+          this.props.navigation.navigate("Espace Client", {
+            Email: this.state.userEmail,
+          });
         } else {
           Alert.alert(responseJson);
         }
